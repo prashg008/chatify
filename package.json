@@ -1,0 +1,34 @@
+{
+  "name": "chatify",
+  "version": "1.0.0",
+  "description": "a skeleton django react app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "NODE_ENV=development webpack-dev-server -d --devtool eval --progress --colors --host 0.0.0.0 --port 3000 --config webpack.config.js",
+    "build": "SYS_ENV=production NODE_ENV=production webpack --colors --config webpack.production.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "chatify"
+  },
+  "author": "prashanth",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.2",
+    "react": "^16.13.1",
+    "react-hot-loader": "^4.12.20",
+    "webpack": "^4.42.1",
+    "webpack-bundle-tracker": "^0.4.3",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {
+    "babel-preset-react": "^6.24.1",
+    "react-dom": "^16.13.1"
+  }
+}
