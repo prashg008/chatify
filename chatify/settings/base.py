@@ -87,6 +87,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.forms',
 ]
 THIRD_PARTY_APPS = [
     'channels',
@@ -94,7 +95,7 @@ THIRD_PARTY_APPS = [
     'webpack_loader',
 ]
 
-LOCAL_APPS = []
+LOCAL_APPS = ['apps.accounts']
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
@@ -134,13 +135,13 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
-AUTH_USER_MODEL = 'auth.User'
+AUTH_USER_MODEL = 'accounts.User'
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
-LOGIN_REDIRECT_URL = '/accounts/profile/'
-# https://docs.djangoproject.com/en/dev/ref/settings/#login-url
-LOGIN_URL = '/accounts/login/'
-# https://docs.djangoproject.com/en/dev/ref/settings/#logout-redirect-url
-LOGOUT_REDIRECT_URL = LOGIN_URL
+# LOGIN_REDIRECT_URL = '/accounts/profile/'
+# # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
+# LOGIN_URL = '/accounts/login/'
+# # https://docs.djangoproject.com/en/dev/ref/settings/#logout-redirect-url
+# LOGOUT_REDIRECT_URL = LOGIN_URL
 # https://docs.djangoproject.com/en/dev/ref/settings/#password-reset-timeout
 PASSWORD_RESET_TIMEOUT = 259200  # (3 days, in seconds)
 
@@ -288,7 +289,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 100,
     'DEFAULT_RENDERER_CLASSES': (
-        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer'
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',

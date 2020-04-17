@@ -12,6 +12,8 @@ django-crispy-forms==1.9.0  # https://github.com/django-crispy-forms/django-cris
 django-redis==4.11.0  # https://github.com/niwinz/django-redis
 channels==2.4.0 # https://github.com/django/channels
 channels-redis==2.4.2
+django-filter==2.2.0 # https://django-filter.readthedocs.io/en/master/
+Pillow==7.1.1  # https://pillow.readthedocs.io/en/stable/
 
 # Django REST Framework
 djangorestframework==3.11.0  # https://github.com/encode/django-rest-framework

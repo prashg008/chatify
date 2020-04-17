@@ -20,10 +20,13 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
+from apps.accounts.urls import user_router
 
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
-    path("", TemplateView.as_view(template_name="base.html"), name="base"),
+    url(r'^api/v1/', include([
+          url(r'^', include(user_router.urls)),
+    ])),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
