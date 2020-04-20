@@ -17,5 +17,6 @@ Pillow==7.1.1  # https://pillow.readthedocs.io/en/stable/
 
 # Django REST Framework
 djangorestframework==3.11.0  # https://github.com/encode/django-rest-framework
+djangorestframework-simplejwt==4.4.0 # https://django-rest-framework-simplejwt.readthedocs.io/en/latest
 # Django webpack-loader
 django-webpack-loader==0.7.0

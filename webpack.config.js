@@ -9,8 +9,9 @@ module.exports = {
       app: [
       'webpack-dev-server/client?http://localhost:3000',
       'webpack/hot/only-dev-server',
-      './apps/frontend/index.js'
-   ]
+      './apps/frontend/index.js',
+   ],
+    vendors: ['react', 'react-dom', 'axios', 'lodash', 'react-router', 'redux', 'react-redux', 'react-router-redux', 'redux-thunk']
   },
 
   output: {
@@ -24,7 +25,8 @@ module.exports = {
     rules: [
       // we pass the output from babel loader to react-hot loader
         { test: /\.jsx?$/, exclude: /node_modules/, loader: ['babel-loader']},
-        {test: /\.css$/i, loader: ['style-loader', 'css-loader']},
+        {test: /\.css$/i, include: /node_modules/, loader: ['style-loader', 'css-loader']},
+        {test: /\.(png|woff|woff2|eot|ttf|svg)$/, loader: 'url-loader?limit=100000'}
 
     ],
   },
@@ -37,7 +39,7 @@ module.exports = {
     hot: true,
     contentBase: path.join(__dirname, './apps/frontend/static'),
     publicPath: `/static/`,
-    writeToDisk: true,
+    writeToDisk: false,
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
