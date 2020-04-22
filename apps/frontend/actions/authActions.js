@@ -6,6 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  CLEAR_ERROR,
 } from './types';
 import axios from 'axios';
 
@@ -21,46 +22,32 @@ export const loadUser = () => async (dispatch) => {
 
 //  Register user
 export const signup = (formData) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-  console.log(formData);
   try {
-    const res = await axios.post('api/v1/users/', formData, config);
-
+    const res = await axios.post('/v1/users/', formData);
     dispatch({
       type: SIGNIN_SUCCESS,
-      payload: res,
+      payload: res.data,
     });
-    loadUser();
   } catch (err) {
     dispatch({
       type: SIGNIN_FAIL,
-      payload: err.response.data.detail,
+      payload: err.response.data,
     });
   }
 };
 
 //  login user
 export const login = (formData) => async (dispatch) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
   try {
-    const res = await axios.post('/api/auth/', formData, config);
+    const res = await axios.post('/auth/', formData);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: res.data,
     });
-    loadUser();
   } catch (err) {
     dispatch({
       type: LOGIN_FAIL,
-      payload: err.response.data.details,
+      payload: err.response.data,
     });
   }
 };
@@ -68,4 +55,8 @@ export const login = (formData) => async (dispatch) => {
 //  logout
 export const logout = () => {
   return { type: LOGOUT };
+};
+
+export const clearError = () => async (dispatch) => {
+  dispatch({ type: CLEAR_ERROR });
 };

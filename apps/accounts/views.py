@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import action
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin, CreateModelMixin
 from rest_framework.response import Response
@@ -17,6 +18,16 @@ class UserViewSet(CreateModelMixin, RetrieveModelMixin, GenericViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
     lookup_fields = ['id']
+
+    def get_permissions(self):
+        """
+        Instantiates and returns the list of permissions that this view requires.
+        """
+        if self.action == 'create':
+            permission_classes = [AllowAny]
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
     def get_queryset(self, *args, **kwargs):
         return self.queryset.filter(id=self.request.user.id)

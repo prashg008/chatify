@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { signup } from '../../actions/authActions';
+import { signup, clearError } from '../../actions/authActions';
 import { setNotification } from '../../actions/notificationAction';
 import { connect } from 'react-redux';
 import { Form, Button, Container, Row } from 'react-bootstrap';
@@ -9,10 +9,14 @@ class Signin extends Component {
   static propTypes = {
     signup: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
+    error: PropTypes.array.isRequired,
+    setNotification: PropTypes.func,
+    clearError: PropTypes.func,
   };
 
   static defaultProps = {
     isAuthenticated: false,
+    error: [],
   };
 
   state = {
@@ -23,9 +27,18 @@ class Signin extends Component {
 
   componentDidMount() {
     if (this.props.isAuthenticated) {
-      props.history.push('/');
+      this.props.history.push('/');
     }
   }
+  componentDidUpdate() {
+    if (this.props.error.length > 0) {
+      this.props.error.map((err) =>
+        this.props.setNotification({ msg: err, type: 'danger' })
+      );
+      this.props.clearError();
+    }
+  }
+
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -38,7 +51,10 @@ class Signin extends Component {
       this.state.email === '' ||
       this.state.password === ''
     ) {
-      setNotification('please Enter all fields', 'danger');
+      this.props.setNotification({
+        msg: 'please Enter all fields',
+        type: 'danger',
+      });
     } else {
       this.props.signup(this.state);
     }
@@ -55,7 +71,7 @@ class Signin extends Component {
                 type='text'
                 name='username'
                 onChange={this.onChange}
-                placeholder='Enter email'
+                placeholder='Enter username'
               />
             </Form.Group>
             <Form.Group controlId='formBasicEmail'>
@@ -91,6 +107,11 @@ class Signin extends Component {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
+  error: state.auth.error,
 });
 
-export default connect(mapStateToProps, { signup })(Signin);
+export default connect(mapStateToProps, {
+  signup,
+  setNotification,
+  clearError,
+})(Signin);

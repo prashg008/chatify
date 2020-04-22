@@ -6,9 +6,10 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
+  CLEAR_ERROR,
 } from '../actions/types';
 
-import { setNotification } from '../actions/notificationAction';
+import _ from 'lodash';
 
 const initialState = {
   access: localStorage.getItem('access'),
@@ -16,24 +17,28 @@ const initialState = {
   isAuthenticated: false,
   loading: true,
   user: null,
-  error: null,
+  error: [],
 };
 
 export default (state = initialState, action) => {
+  let er = [];
   switch (action.type) {
     case SIGNIN_SUCCESS:
       localStorage.setItem('access', action.payload.access);
       localStorage.setItem('refresh', action.payload.refresh);
       return {
         ...state,
-        ...action.payload,
+        user: action.payload,
         isAuthenticated: true,
         loading: false,
       };
     case SIGNIN_FAIL:
       localStorage.removeItem('access');
       localStorage.removeItem('refresh');
-      setNotification(action.payload);
+      er = [];
+      _.values(action.payload).map((e) => {
+        er = _.concat(er, e);
+      });
       return {
         ...state,
         access: null,
@@ -41,7 +46,7 @@ export default (state = initialState, action) => {
         user: null,
         isAuthenticated: false,
         loading: false,
-        error: action.payload,
+        error: _.concat(er, state.error),
       };
     case USER_LOADED:
       return {
@@ -53,6 +58,10 @@ export default (state = initialState, action) => {
     case AUTH_ERROR:
       localStorage.removeItem('access');
       localStorage.removeItem('refresh');
+      er = [];
+      _.values(action.payload).map((e) => {
+        er = _.concat(er, e);
+      });
       return {
         ...state,
         access: null,
@@ -60,7 +69,7 @@ export default (state = initialState, action) => {
         user: null,
         isAuthenticated: false,
         loading: false,
-        error: action.payload,
+        error: _.concat(er, state.error),
       };
     case LOGIN_SUCCESS:
       localStorage.setItem('access', action.payload.token);
@@ -74,6 +83,10 @@ export default (state = initialState, action) => {
     case LOGIN_FAIL:
       localStorage.removeItem('access');
       localStorage.removeItem('refresh');
+      er = [];
+      _.values(action.payload).map((e) => {
+        er = _.concat(er, e);
+      });
       return {
         ...state,
         access: null,
@@ -81,7 +94,7 @@ export default (state = initialState, action) => {
         user: null,
         isAuthenticated: false,
         loading: false,
-        error: action.payload,
+        error: _.concat(er, state.error),
       };
     case LOGOUT:
       localStorage.removeItem('access');
@@ -94,6 +107,11 @@ export default (state = initialState, action) => {
         isAuthenticated: false,
         loading: false,
         error: action.payload,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: [],
       };
     default:
       return state;

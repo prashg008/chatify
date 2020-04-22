@@ -2,39 +2,43 @@ import React, { Fragment } from 'react';
 import Toast from 'react-bootstrap/Toast';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { CloseNotification } from '../../actions/notificationAction';
 
-const Notification = ({ notify }) => {
+const Notification = ({ notify, CloseNotification }) => {
   return notify.length > 0 ? (
     <div
       aria-live='polite'
       aria-atomic='true'
       style={{
-        position: 'relative',
+        position: 'fixed',
         minHeight: '200px',
-        zIndex: 1,
+        minWidth: '200px',
+        zIndex: 11111,
+        top: 50,
+        right: 0,
       }}
     >
       <div
         style={{
           position: 'absolute',
-          top: 0,
-          right: 0,
+          top: '1rem',
+          right: '1rem',
+          height: 'fit-content',
+          minWidth: '200px',
         }}
       >
-        {notify.map((n) => (
-          <Toast key={n.id}>
-            <Toast.Header>
-              <img
-                src='holder.js/20x20?text=%20'
-                className='rounded mr-2'
-                alt=''
-              />
-              <strong className='mr-auto'>chattify</strong>
-              <small>just now</small>
-            </Toast.Header>
-            <Toast.Body>{n.msg}</Toast.Body>
-          </Toast>
-        ))}
+        {notify.map((n) => {
+          return (
+            <Toast key={n.id} onClose={() => CloseNotification({ id: n.id })}>
+              <Toast.Header>
+                <i className='fas fa-id-card-alt'></i>
+                <strong className='mr-auto'> chattify</strong>
+                <small>just now</small>
+              </Toast.Header>
+              <Toast.Body>{JSON.stringify(n.msg)}</Toast.Body>
+            </Toast>
+          );
+        })}
       </div>
     </div>
   ) : (
@@ -44,6 +48,7 @@ const Notification = ({ notify }) => {
 
 Notification.propTypes = {
   notify: PropTypes.array.isRequired,
+  CloseNotification: PropTypes.func.isRequired,
 };
 
 Notification.defaultProps = {
@@ -54,4 +59,4 @@ const mapStateToProps = (state) => ({
   notify: state.notify,
 });
 
-export default connect(mapStateToProps, null)(Notification);
+export default connect(mapStateToProps, { CloseNotification })(Notification);

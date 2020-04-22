@@ -13,7 +13,7 @@ const Navbar = ({ title, icon, user, logout, isAuthenticated }) => {
   const authLinks = (
     <Fragment>
       <BootNav.Text>
-        Hello {user && user.name}
+        <span>Hello {user && user.username}</span>
         <a onClick={onLogout} href='#'>
           <i className='fas fa-sign-out-alt'></i>
           <span className='hide-sm'>Logout</span>
