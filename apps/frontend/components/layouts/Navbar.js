@@ -13,7 +13,9 @@ const Navbar = ({ title, icon, user, logout, isAuthenticated }) => {
   const authLinks = (
     <Fragment>
       <BootNav.Text>
-        <span>Hello {user && user.username}</span>
+        <span style={{ marginRight: '20px' }}>
+          Hello {user && user.username}
+        </span>
         <a onClick={onLogout} href='#'>
           <i className='fas fa-sign-out-alt'></i>
           <span className='hide-sm'>Logout</span>

@@ -72,7 +72,7 @@ export default (state = initialState, action) => {
         error: _.concat(er, state.error),
       };
     case LOGIN_SUCCESS:
-      localStorage.setItem('access', action.payload.token);
+      localStorage.setItem('access', action.payload.access);
       localStorage.setItem('refresh', action.payload.refresh);
       return {
         ...state,

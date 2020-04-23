@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { signup, clearError } from '../../actions/authActions';
+import { signup, clearError, loadUser } from '../../actions/authActions';
 import { setNotification } from '../../actions/notificationAction';
 import { connect } from 'react-redux';
 import { Form, Button, Container, Row } from 'react-bootstrap';
@@ -12,6 +12,7 @@ class Signin extends Component {
     error: PropTypes.array.isRequired,
     setNotification: PropTypes.func,
     clearError: PropTypes.func,
+    loadUser: PropTypes.func,
   };
 
   static defaultProps = {
@@ -28,6 +29,7 @@ class Signin extends Component {
   componentDidMount() {
     if (this.props.isAuthenticated) {
       this.props.history.push('/');
+      this.props.loadUser();
     }
   }
   componentDidUpdate() {
@@ -36,6 +38,10 @@ class Signin extends Component {
         this.props.setNotification({ msg: err, type: 'danger' })
       );
       this.props.clearError();
+    }
+    if (this.props.isAuthenticated) {
+      this.props.history.push('/');
+      this.props.loadUser();
     }
   }
 
@@ -114,4 +120,5 @@ export default connect(mapStateToProps, {
   signup,
   setNotification,
   clearError,
+  loadUser,
 })(Signin);

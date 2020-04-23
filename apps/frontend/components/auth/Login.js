@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { login, clearError } from '../../actions/authActions';
+import { login, clearError, loadUser } from '../../actions/authActions';
 import { setNotification } from '../../actions/notificationAction';
 import { connect } from 'react-redux';
 import { Form, Button, Container, Row } from 'react-bootstrap';
@@ -12,6 +12,7 @@ class Login extends Component {
     error: PropTypes.array.isRequired,
     setNotification: PropTypes.func,
     clearError: PropTypes.func,
+    loadUser: PropTypes.func,
   };
 
   static defaultProps = {
@@ -27,11 +28,13 @@ class Login extends Component {
   componentDidMount() {
     if (this.props.isAuthenticated) {
       this.props.history.push('/');
+      this.props.loadUser();
     }
   }
   componentDidUpdate() {
     if (this.props.isAuthenticated) {
       this.props.history.push('/');
+      this.props.loadUser();
     }
     if (this.props.error.length > 0) {
       this.props.error.map((err) =>
@@ -100,4 +103,5 @@ export default connect(mapStateToProps, {
   login,
   setNotification,
   clearError,
+  loadUser,
 })(Login);
