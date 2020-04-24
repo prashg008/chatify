@@ -252,3 +252,4 @@ dist
 .pnp.*
 
 webpack-stats.json
+/apps/*/migrations/
