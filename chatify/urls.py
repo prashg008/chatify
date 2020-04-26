@@ -21,6 +21,7 @@ from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from apps.accounts.urls import user_router
+from apps.chat.urls import chat_router
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
@@ -30,6 +31,7 @@ urlpatterns = [
     path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     url(r'^api/v1/', include([
           url(r'^', include(user_router.urls)),
+          url(r'^', include(chat_router.urls)),
     ])),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

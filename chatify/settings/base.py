@@ -96,7 +96,7 @@ THIRD_PARTY_APPS = [
     'webpack_loader',
 ]
 
-LOCAL_APPS = ['apps.accounts']
+LOCAL_APPS = ['apps.accounts', 'apps.chat']
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
