@@ -1,10 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import PropTypes from 'prop-types'
 
 export default class ChatList extends Component {
-    static propTypes = {
-        prop: PropTypes
-    }
+
+    state = {}
 
     render() {
         return (
