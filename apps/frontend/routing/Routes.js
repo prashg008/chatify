@@ -5,7 +5,7 @@ import Login from '../components/auth/Login';
 import Signin from '../components/auth/Signin';
 import Notification from '../components/layouts/Notification';
 import PrivateRoute from './PrivateRoute';
-import ChatList from '../components/chat/ChatList';
+import Messenger from '../components/chat/Messenger';
 
 const Routes = () => {
   return (
@@ -16,7 +16,7 @@ const Routes = () => {
         <Switch>
           <Route exact path='/signin' component={Signin} />
           <Route exact path='/login' component={Login} />
-          <PrivateRoute path='/' component={ChatList} />
+          <PrivateRoute path='/' component={Messenger} />
         </Switch>
       </Fragment>
     </Router>

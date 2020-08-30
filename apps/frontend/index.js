@@ -1,11 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import store from './store';
 import App from './app';
 import axios from 'axios';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
@@ -20,6 +24,7 @@ axios.defaults.headers.patch['Content-Type'] = 'application/json';
 // Add a request interceptor
 axios.interceptors.request.use(
   (config) => {
+    console.log('interceptors');
     const token = localStorage.getItem('access');
     if (token) {
       config.headers['Authorization'] = 'Bearer ' + token;

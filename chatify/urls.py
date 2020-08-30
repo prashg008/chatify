@@ -22,16 +22,18 @@ from django.views import defaults as default_views
 from django.views.generic import TemplateView
 from apps.accounts.urls import user_router
 from apps.chat.urls import chat_router
+from rest_framework import routers
 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/auth/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     url(r'^api/v1/', include([
-          url(r'^', include(user_router.urls)),
-          url(r'^', include(chat_router.urls)),
+        url(r'^', include(user_router.urls)),
+        url(r'^', include(chat_router.urls)),
     ])),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
@@ -64,7 +66,9 @@ if settings.DEBUG:
 if "debug_toolbar" in settings.INSTALLED_APPS:
     import debug_toolbar
 
-    urlpatterns = [path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
+    urlpatterns = [
+        path("__debug__/", include(debug_toolbar.urls))] + urlpatterns
 
 
-urlpatterns += [path(r"", TemplateView.as_view(template_name="base.html"), name="base")]
+urlpatterns += [path(r"",
+                     TemplateView.as_view(template_name="base.html"), name="base")]

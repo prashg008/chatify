@@ -21,7 +21,19 @@ class RoomsSerializers(serializers.ModelSerializer):
 
 class MessageSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
+    room = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+    text = serializers.CharField(allow_blank=False, trim_whitespace=True)
 
     class Meta:
         model = Messages
-        fields = ['id', 'room', 'user', 'message']
+        fields = ['id', 'room', 'user', 'text']
+
+    def create(self, validated_data):
+        user = None
+        request = self.context.get("request")
+        if request and hasattr(request, "user"):
+            user = request.user
+        else:
+            raise serializers.ValidationError
+        instance = Messages.objects.create(user=user, **validated_data)
+        return instance

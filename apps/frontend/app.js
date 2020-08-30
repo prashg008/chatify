@@ -1,15 +1,20 @@
-import React, { Fragment } from 'react';
-import { Provider } from 'react-redux';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import store from './store';
 import Routes from './routing/Routes';
+import { connect } from 'react-redux';
+import { loadUser } from './actions/authActions';
 
-const App = () => {
-  return (
-    <Provider store={store}>
-      <Routes />
-    </Provider>
-  );
+const App = ({ isAuthenticated, loadUser }) => {
+  const token = localStorage.getItem('access');
+  if (token && !isAuthenticated) {
+    console.log('loaduser');
+    loadUser();
+  }
+  return <Routes />;
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { loadUser })(App);

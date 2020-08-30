@@ -18,7 +18,7 @@ const Navbar = ({ title, icon, user, logout, isAuthenticated }) => {
         </span>
         <a onClick={onLogout} href='#'>
           <i className='fas fa-sign-out-alt'></i>
-          <span className='hide-sm'>Logout</span>
+          <span className='.d-block .d-md-none'>Logout</span>
         </a>
       </BootNav.Text>
     </Fragment>
@@ -34,7 +34,7 @@ const Navbar = ({ title, icon, user, logout, isAuthenticated }) => {
     </Fragment>
   );
   return (
-    <BootNav>
+    <BootNav style={{ height: '8vh' }}>
       <BootNav.Brand as={Link} to='/'>
         <i className={icon} /> {title}
       </BootNav.Brand>

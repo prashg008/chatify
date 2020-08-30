@@ -22,7 +22,8 @@ APPS_DIR = BASE_DIR / 'apps'
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', 'og=(5yea8pa1%bb9z@$v_xipu0pndv86yc4u!v*sb35$d5_p31')
+SECRET_KEY = os.getenv(
+    'SECRET_KEY', 'og=(5yea8pa1%bb9z@$v_xipu0pndv86yc4u!v*sb35$d5_p31')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_DEBUG', False)
@@ -65,16 +66,16 @@ DATABASES = {
     }
 }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': '{0}'.format(os.getenv('DATABASE_ENGINE', 'django.db.backends.postgresql')),
-#         'NAME': '{0}'.format(os.getenv('DATABASE_NAME', '')),
-#         'USER': '{0}'.format(os.getenv('DATABASE_USER', '')),
-#         'PASSWORD': '{0}'.format(os.getenv('DATABASE_PASSWORD', '')),
-#         'HOST': '{0}'.format(os.getenv('DATABASE_HOST', '')),
-#         'PORT': '{0}'.format(os.getenv('DATABASE_PORT', '')),
-#     }
-# }
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE': '{0}'.format(os.getenv('DATABASE_ENGINE', 'django.db.backends.postgresql')),
+    #         'NAME': '{0}'.format(os.getenv('DATABASE_NAME', '')),
+    #         'USER': '{0}'.format(os.getenv('DATABASE_USER', '')),
+    #         'PASSWORD': '{0}'.format(os.getenv('DATABASE_PASSWORD', '')),
+    #         'HOST': '{0}'.format(os.getenv('DATABASE_HOST', '')),
+    #         'PORT': '{0}'.format(os.getenv('DATABASE_PORT', '')),
+    #     }
+    # }
 # DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 ROOT_URLCONF = 'chatify.urls'
@@ -294,6 +295,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
