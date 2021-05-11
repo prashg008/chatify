@@ -37,7 +37,7 @@
     "bootstrap": "^4.4.1",
     "file-loader": "^6.0.0",
     "i": "^0.3.6",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0",
